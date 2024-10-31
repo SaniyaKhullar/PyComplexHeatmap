@@ -14,7 +14,9 @@ from .utils import (
 	get_colormap,
 )
 from .clustermap import plot_heatmap, DendrogramPlotter
-
+import warnings
+import matplotlib.patches as patches
+from tqdm.auto import tqdm
 
 # -----------------------------------------------------------------------------
 class AnnotationBase:
@@ -251,6 +253,8 @@ class AnnotationBase:
 		return max([self.get_label_width(), self.get_ticklabel_width()])
 
 
+
+# =============================================================================
 # =============================================================================
 class anno_simple(AnnotationBase):
 	"""
@@ -391,7 +395,7 @@ class anno_simple(AnnotationBase):
 				# print(t,self.color_dict)
 				lum = _calculate_luminance(self.color_dict.get(t,'black'))
 				if color is None:
-					text_color = "black" if lum > 0.408 else "white"
+					text_color = "black" #if lum > 0.408 else "white"
 				else:
 					text_color = color
 				# print(t,self.color_dict,text_color,color)
@@ -1337,6 +1341,7 @@ class anno_lineplot(anno_barplot):
 		self.fig = fig
 		self.ax = ax
 		return self.ax
+
 # =============================================================================
 class anno_dendrogram(AnnotationBase):
 	def __init__(
@@ -2155,6 +2160,5 @@ class HeatmapAnnotation:
 				legend_vpad=self.legend_vpad,
 				verbose=self.verbose
 			)
-
 
 # =============================================================================
